@@ -82,3 +82,18 @@ class DBStorage:
     def close(self):
         """Close the working SQLAlchemy session."""
         self.__session.close()
+
+    def get(self, cls, id):
+        """Retrieves an object"""
+        retrieved_objects = self.all(cls)
+        for object in retrieved_objects.values():
+            if id == object.id:
+                return object
+        return None
+
+    def count(self, cls=None):
+        """Returns number of objects"""
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
